@@ -5,8 +5,7 @@ module.exports = {
     try {
       const thoughts = await Thought.find();
       const thoughtObj = {
-        thoughts,
-        headCount: await headCount(),
+        thoughts
       };
       return res.json(thoughtObj);
     } catch (err) {

@@ -5,8 +5,7 @@ const UserController = {
     try {
       const users = await User.find();
       const userObj = {
-        users,
-        headCount: await headCount(),
+        users
       };
       return res.json(userObj);
     } catch (err) {
