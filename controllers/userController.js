@@ -1,7 +1,6 @@
-const { ObjectId } = require('mongoose').Types;
-const { User, Thought } = require('../models');
+const { User, Thought } = require("../models");
 
-module.exports = {
+const UserController = {
   getUsers: async (req, res) => {
     try {
       const users = await User.find();
@@ -15,7 +14,6 @@ module.exports = {
       return res.status(500).json(err);
     }
   },
-  
 
   getSingleUser: async (req, res) => {
     try {
@@ -45,4 +43,39 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+
+  updateUser: async (req, res) => {
+    const { userId } = req.params;
+    const { username, email } = req.body;
+    try {
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { username, email },
+        { new: true }
+      );
+      if (!updatedUser) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      res.json(updatedUser);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  },
+
+  deleteUser: async (req, res) => {
+    const { userId } = req.params;
+    try {
+      const deletedUser = await User.findByIdAndDelete(userId);
+      if (!deletedUser) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      res.json({ message: 'User successfully deleted' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  },
 };
+
+module.exports = UserController;
