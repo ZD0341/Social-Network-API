@@ -25,8 +25,8 @@ const UserController = {
       }
 
       res.json({
-        user,
-        averageThoughts: await averageThoughts(req.params.userId),
+        user
+    
       });
     } catch (err) {
       console.log(err);
