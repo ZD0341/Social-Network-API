@@ -101,7 +101,6 @@ module.exports = {
                 { $pull: { friends: friendId } },
                 { new: true }
             );
-            console.log(user)
 
             if (!user) {
                 return res.status(404).json({ message: 'No user found with that ID :(' });
